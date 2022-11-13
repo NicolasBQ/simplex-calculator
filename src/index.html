@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <title>Calculadora Método Simplex</title>
+</head>
+<body class="d-flex flex-column justify-content-center align-items-center" >
+    <h1 class="text-primary">Calculadora Método Simplex</h1>
+    <main class="container">
+        <form class="d-flex flex-column justify-content-center align-items-center" data-first-form>
+            <label class="form-label py-2" for="number_variables">Ingrese el número de variables</label>
+            <input class="form-control" type="number" id="number_variables" style="width: 40%;" data-num-variables required>
+            <label class="form-label py-2" for="number_restrictions">Ingrese el número de restricciones</label>
+            <input class="form-control" type="number" id="number_restrictions" style="width: 40%;" data-num-restrictions required>
+            <button class="btn btn-primary my-3">Generar Modelo</button>
+        </form>
+
+        <div class="d-none flex-column justify-content-center align-items-center" data-second-form>
+            <h3>Objetivo</h3>
+            <select name="objective" id="objective" class="form-select" style="width: 40%;">
+                <option value="max">Maximizar</option>
+                <option value="min">Minimizar</option>
+            </select>
+            <h3 class="py-3">Función Objetivo</h3>
+            <div class="d-flex justify-content-between align-items-center" style="width: 40%;" data-objective-function>
+
+
+            </div>
+            <h3 class="py-3">Restricciones</h3>
+            <div class="d-flex flex-column justify-content-between align-items-center" data-restrictions>
+
+            </div>
+            <div class="d-flex align-items-center justify-content-evenly my-5" style="width: 30%;">
+                <button class="btn btn-primary" data-solve-btn>Resolver</button>
+                <button class="btn btn-warning" data-edit-btn>Editar</button>
+                <button class="btn btn-secondary" data-clean-btn>Limpiar</button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="my-5"><b class="text-secondary">Nicolas Baracaldo</b></footer>
+
+    <script type="module" src="js/index.js"></script>
+</body>
+</html>
