@@ -8,7 +8,6 @@ const simplex_handler = () => {
     const restriction_operators = get_operators().restriction_operators;
     const restriction_conditions = get_conditions().restriction_conditions;
 
-    console.log(restriction_conditions);
 
 
     return {
