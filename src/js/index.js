@@ -1,6 +1,7 @@
 import {dom_element} from './dom.js';
 import { first_form_handler } from './form_handler.js';
 import { edit_first_form, clean_data } from './forms_display.js';
+import { simplex_handler } from './simplex.js';
 
 
 const app_init = () => {
@@ -15,16 +16,16 @@ const app_init = () => {
         first_form_handler(first_form, second_form);
     });
 
-    // solve_btn.addEventListener('click', () => {
-    //     console.log('RESOLVER');
-    // });
+    solve_btn.addEventListener('click', () => {
+        simplex_handler();
+    });
 
     edit_btn.addEventListener('click', () => {
         edit_first_form(first_form, second_form);
     })
 
     clean_btn.addEventListener('click', () => {
-        clean_data(second_form);
+        clean_data();
     })
 
 }

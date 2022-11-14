@@ -13,19 +13,19 @@ const form_display = (first_form, second_form, variables_number, restrictions_nu
 
     for(let i = 0; i < variables_number; i++) {
         function_container.innerHTML += `
-        <input type="number" class="form-control" style="width: 100px;" id="variable_${i}/>
+        <input type="number" class="form-control" style="width: 100px;" id="variable_${i} data-variable-${i}/>
         <label class="form-label" for="variable_${i}"><b> + X${i + 1}</b></label>`
     }
 
     for(let i = 0; i < restrictions_number; i++) {
         restrictions_container.innerHTML += `
-        <div class="d-flex my-3">
+        <div class="d-flex my-3" data-restriction-container>
             ${objetive_function_generator(variables_number)}
-            <select name="operator" id="operator" class="form-select mx-2" style="width: 100px;">
-            <option value=">="> >= </option>
-            <option value="<="> <= </option>
+            <select name="operator" id="operator" class="form-select mx-2" style="width: 100px;" data-rOperator>
+                <option value=">="> >= </option>
+                <option value="<="> <= </option>
             </select>
-            <input type="number" class="form-control mx-2" style="width: 100px;" />
+            <input type="number" class="form-control mx-2" style="width: 100px;" data-condition/>
         </div>
         `     
     }
@@ -38,7 +38,7 @@ const objetive_function_generator = (n) => {
 
     for(let i = 0; i < n; i++) {
         function_container.innerHTML += `
-        <input type="number" class="form-control" style="width: 100px;" id="variable_${i}/>
+        <input type="number" class="form-control" style="width: 100px;" id="variable_${i}" data-rCoeficient/>
         <label class="form-label" for="variable_${i}"><b> + X${i + 1}</b></label>
        `
     }
@@ -57,9 +57,15 @@ const edit_first_form = (first_form, second_form) => {
 
     first_form.classList.remove('d-none');
     first_form.classList.add('d-flex');
+
+    const function_container = dom_element().function_container;
+    const restrictions_container = dom_element().restrictions_container;
+
+    function_container.innerHTML = '';
+    restrictions_container.innerHTML = '';
 }
 
-const clean_data = (second_form) => {
+const clean_data = () => {
     const second_form_inputs = document.querySelectorAll('[data-second-form] input');
 
     const input_arr = Array.from(second_form_inputs);

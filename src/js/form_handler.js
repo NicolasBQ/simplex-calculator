@@ -14,7 +14,6 @@ const first_form_handler = (first_form, second_form) => {
     } else {
         form_display(first_form, second_form, variables_number, restrictions_number);
     }
-
 }
 
 
