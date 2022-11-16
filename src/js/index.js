@@ -2,6 +2,8 @@ import {dom_element} from './dom.js';
 import { first_form_handler } from './form_handler.js';
 import { edit_first_form, clean_data } from './forms_display.js';
 import { standarization } from './standarization.js';
+import { matrix } from './boards.js';
+
 
 const app_init = () => {
     const first_form = dom_element().first_form;
@@ -17,6 +19,7 @@ const app_init = () => {
 
     solve_btn.addEventListener('click', () => {
         standarization();
+        matrix();
     });
 
     edit_btn.addEventListener('click', () => {

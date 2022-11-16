@@ -21,16 +21,24 @@ const standarization = () => {
         if(operators[i] == '<=') {
            hol[i].res_value = conditions[i];
            hol[i].contribution = 0;
+           hol[i].res_contribution = 1;
+           hol[i].type = 'hol';
 
            art[i].res_value = null;
            art[i].contribution = 0;
+           art[i].res_contribution = null;
+           art[i].type = 'art';
 
         } else {
             hol[i].res_value = null;
             hol[i].contribution = 0;
+            hol[i].res_contribution = -1;
+            hol[i].type = 'hol';
 
             art[i].res_value = conditions[i];
-            art[i].contribution = objective == 'max' ? coeficient[0] * 1000 : coeficient[0] * -1000;                
+            art[i].contribution = objective == 'max' ? coeficient[0] * 1000 : coeficient[0] * -1000;  
+            art[i].type = 'art'; 
+            art[i].res_contribution = 1;             
         }
     }
 
@@ -44,8 +52,6 @@ const standarization = () => {
     }
 
     const basic_solution = (variables_solution.concat(hol_values.concat(art_values))).filter(item => item != null);
-
-    console.log(basic_solution);
 
 
     return {

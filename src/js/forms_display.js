@@ -22,8 +22,8 @@ const form_display = (first_form, second_form, variables_number, restrictions_nu
         <div class="d-flex my-3" data-restriction-container>
             ${objetive_function_generator(variables_number)}
             <select name="operator" id="operator" class="form-select mx-2" style="width: 100px;" data-rOperator>
-                <option value=">="> >= </option>
                 <option value="<="> <= </option>
+                <option value=">="> >= </option>
             </select>
             <input type="number" class="form-control mx-2" style="width: 100px;" data-condition/>
         </div>
