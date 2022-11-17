@@ -1,9 +1,9 @@
 import { simplex_handler } from "./simplex.js";
 import { standarization } from "./standarization.js";
 import { dom_element } from "./dom.js";
+import { board_handler } from "./board_operations.js";
 
 const matrix = () => {
-    const matrix = [];
     const aux_variables = standarization().hol.concat(standarization().art);
     
     const aux_contribution = aux_variables_contribution(aux_variables).contribution;
@@ -11,19 +11,14 @@ const matrix = () => {
     const var_coeficients = variables_coeficient().variable_matrix;
     const aux_res_contribution = aux_restriction_contribution(aux_variables).stand_variables_matrix;
 
-    matrix.push(aux_contribution);
-    matrix.push(aux_type);
-    
-    for(let i = 0; i < var_coeficients.length; i++) {
-        matrix.push(var_coeficients[i]);
+    const matrix = {
+        aux_contribution,
+        aux_type,
+        var_coeficients,
+        aux_res_contribution
     }
 
-    for(let i = 0; i < aux_res_contribution.length; i++) {
-        matrix.push(aux_res_contribution[i]);
-    }
-
-
-    return { matrix }
+    board_handler(matrix);
 }
 
 

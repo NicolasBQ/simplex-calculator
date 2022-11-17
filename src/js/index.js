@@ -3,6 +3,7 @@ import { first_form_handler } from './form_handler.js';
 import { edit_first_form, clean_data } from './forms_display.js';
 import { standarization } from './standarization.js';
 import { matrix } from './boards.js';
+import { board_handler } from './board_operations.js';
 
 
 const app_init = () => {
