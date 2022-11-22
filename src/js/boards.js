@@ -5,17 +5,24 @@ import { board_handler } from "./board_operations.js";
 
 const matrix = () => {
     const aux_variables = standarization().hol.concat(standarization().art);
-    
     const aux_contribution = aux_variables_contribution(aux_variables).contribution;
     const aux_type = aux_variables_type(aux_variables).type;
     const var_coeficients = variables_coeficient().variable_matrix;
     const aux_res_contribution = aux_restriction_contribution(aux_variables).stand_variables_matrix;
+    const values_matrix = var_coeficients.concat(aux_res_contribution);
+    const xj = simplex_handler().restriction_conditions;
+    const restrictions_number = dom_element().restrictions_number.value;
+    let result = 0;
+    for (let i = 0; i < restrictions_number; i++) {
+        result += aux_contribution[i] * xj[i];
+    }
 
     const matrix = {
         aux_contribution,
-        aux_type,
-        var_coeficients,
-        aux_res_contribution
+        // aux_type,
+        values_matrix,
+        xj,
+        result
     }
 
     board_handler(matrix);
@@ -65,7 +72,7 @@ const variables_coeficient = () => {
 
     for(let i = 0; i < restrictions_coeficients.length; i++) {
         for(let j = 0; j < variables_number; j++) {
-            variable_matrix[j].push(parseFloat(restrictions_coeficients[i][j]));
+            variable_matrix[j].push(restrictions_coeficients[i][j]);
         }
     }
   
@@ -103,6 +110,9 @@ const aux_restriction_contribution = (aux_variables) => {
 
     return { stand_variables_matrix }
 }
+
+
+
 
 
 
