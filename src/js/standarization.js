@@ -34,7 +34,6 @@ const standarization = () => {
         hol_values.push(hol[i].res_value);
     }
 
-
     return {
         hol, 
     }

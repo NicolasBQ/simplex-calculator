@@ -10,18 +10,10 @@ const board_handler = (matrix) => {
     const restrictions_number = dom_element().restrictions_number.value;
     const problem_objective = simplex_handler().objective_value;
 
-
-
-
     // fj - cj
     const fjcj = [];
     const values_matrix = matrix.values_matrix;
     const function_coeficients = matrix.function_coeficients;
-
-    console.log(fjcj);
-    console.log(function_coeficients);
-    console.log(cb);
-    console.log(values_matrix);
 
 
     for (let i = 0; i < values_matrix.length; i++) {
@@ -79,8 +71,6 @@ const board_handler = (matrix) => {
 
     let pivot_column = values_matrix[select_column];
 
-    console.log(pivot_column);
-
 
     // FIND PIVOT
     let min_ratio = 10000000;
@@ -98,9 +88,6 @@ const board_handler = (matrix) => {
             }
         }
     }
-
-    console.log(pivot_value);
-    console.log(pivot_index);
 
     // Replace the contribution 
     for (let i = 0; i < cb.length; i++) {
@@ -163,12 +150,6 @@ const board_handler = (matrix) => {
         result += cb[i] * conditions[i];
     }
 
-    console.log(cb)
-    console.log(values_matrix);
-    console.log(conditions);
-    console.log(result);
-    console.log(function_coeficients);;
-
     let matrix_2 = {
         aux_contribution: cb,
         values_matrix,
@@ -179,7 +160,6 @@ const board_handler = (matrix) => {
 
     board_handler(matrix_2);
     return;
-    // board_handler(matrix_2, 3);
 }
 
 

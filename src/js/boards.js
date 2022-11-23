@@ -97,6 +97,11 @@ const aux_restriction_contribution = (aux_variables) => {
     let z = -1;
 
 
+    for(let i = 0; i < standarization().hol.length; i++) {
+        hol_arr.push([]);
+    }
+
+
     while(k < standarization().hol.length) {
         z++;
         while(z < hol_arr.length) {
