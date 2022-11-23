@@ -10,6 +10,7 @@ const simplex_handler = () => {
 
 
 
+
     return {
         objective_value,
         variables_coeficients,

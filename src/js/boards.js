@@ -4,14 +4,17 @@ import { dom_element } from "./dom.js";
 import { board_handler } from "./board_operations.js";
 
 const matrix = () => {
-    const aux_variables = standarization().hol.concat(standarization().art);
+    const aux_variables = standarization().hol;
     const aux_contribution = aux_variables_contribution(aux_variables).contribution;
+    const base_contribution = standarization().hol.map(base => base.base_contribution);
     const aux_type = aux_variables_type(aux_variables).type;
     const var_coeficients = variables_coeficient().variable_matrix;
     const aux_res_contribution = aux_restriction_contribution(aux_variables).stand_variables_matrix;
     const values_matrix = var_coeficients.concat(aux_res_contribution);
     const xj = simplex_handler().restriction_conditions;
     const restrictions_number = dom_element().restrictions_number.value;
+    const function_coeficients = simplex_handler().variables_coeficients.concat(base_contribution);
+
     let result = 0;
     for (let i = 0; i < restrictions_number; i++) {
         result += aux_contribution[i] * xj[i];
@@ -22,8 +25,11 @@ const matrix = () => {
         // aux_type,
         values_matrix,
         xj,
-        result
+        result,
+        function_coeficients
     }
+
+
 
     board_handler(matrix);
 }
@@ -38,6 +44,10 @@ const aux_variables_contribution = (aux_variables) => {
             contribution.push(aux_variables[i].contribution);
         }
     }
+
+    // const contribution = contribution_a.filter(coeficient => coeficient === 0);
+
+    // console.log(contribution);
 
     return { contribution }
 }
@@ -80,33 +90,32 @@ const variables_coeficient = () => {
 }
 
 const aux_restriction_contribution = (aux_variables) => {
-    const aux_res_contribution = aux_variables.filter(variable => variable.res_contribution != null);
-    const stand_variables_matrix = [];
+    const hol_arr = [];
     const restrictions_number = dom_element().restrictions_number.value;
 
+    let k = 0;
+    let z = -1;
 
-    for(let i = 0; i < aux_res_contribution.length; i++) {
-        stand_variables_matrix.push([]);
-    }
 
-    let i = 0;
-    let j = -1;
-
-    while(i < aux_res_contribution.length) {
-        j++;
-        while(j < stand_variables_matrix.length) {
-            for(let k = 0; k < restrictions_number; k++) {
-                if(i == k) {
-                    stand_variables_matrix[j][k] = aux_res_contribution[i].res_contribution;
+    while(k < standarization().hol.length) {
+        z++;
+        while(z < hol_arr.length) {
+            for(let q = 0; q < restrictions_number; q++) {
+                if(k === q) {
+                    hol_arr[z][q] = standarization().hol[q].res_contribution;
                 } else {
-                    stand_variables_matrix[j][k] = 0;
+                    hol_arr[z][q] = 0;
                 }
             }
 
-            i++;
+            k++;
             break;
         }
     }
+
+    const stand_variables_matrix = hol_arr;
+
+
 
     return { stand_variables_matrix }
 }
