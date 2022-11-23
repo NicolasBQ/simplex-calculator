@@ -11,7 +11,10 @@ const first_form_handler = (first_form, second_form) => {
         alert('El numero maximo de variables es 3');
     } else if(restrictions_number < 1) {
         alert('El numero minimo de restricciones es 1');
-    } else {
+    } else if(restrictions_number > 4) {
+        alert('El numeo maximo de restricciones es 4');
+    }
+    else {
         form_display(first_form, second_form, variables_number, restrictions_number);
     }
 }

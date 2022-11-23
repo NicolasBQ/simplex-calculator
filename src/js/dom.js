@@ -9,6 +9,9 @@ const dom_element = () => {
     const edit_btn = document.querySelector('[data-edit-btn]');
     const clean_btn = document.querySelector('[data-clean-btn]');
     const objective_value = document.querySelector('[data-objective]');
+    const result_container = document.querySelector('[data-result-container]');
+    const result_variables = document.querySelector('[data-result-variables]');
+    const edit_result_btn = document.querySelector('[data-edit-result]');
 
 
 
@@ -22,7 +25,10 @@ const dom_element = () => {
         solve_btn,
         edit_btn,
         clean_btn,
-        objective_value
+        objective_value,
+        result_container,
+        result_variables,
+        edit_result_btn,
     }
 }
 

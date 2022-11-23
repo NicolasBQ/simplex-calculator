@@ -1,5 +1,6 @@
 import { dom_element } from "./dom.js";
 import { simplex_handler } from "./simplex.js";
+import { result_box } from "./result_box.js";
 
 
 const board_handler = (matrix) => {
@@ -30,6 +31,7 @@ const board_handler = (matrix) => {
         fjcj.push(result);
     }
 
+    // BASE CASE
     let end_condition;
     if(problem_objective === 'max') {
         end_condition = fjcj.every(element => element >= 0);
@@ -38,13 +40,12 @@ const board_handler = (matrix) => {
     }
 
     if(end_condition) {
-        console.log(matrix)
         let result = 0;
         for (let i = 0; i < restrictions_number; i++) {
             result += cb[i] * conditions[i];
         }
 
-        console.log(result);
+       result_box(matrix);
 
         return;
     }
@@ -61,8 +62,6 @@ const board_handler = (matrix) => {
         column_value = Math.max(...fjcj);
     }
 
-    console.log(fjcj);
-    console.log(column_value);
     for (let i = 0; i < fjcj.length; i++) {
         if (fjcj[i] === column_value) {
             select_column = i;
@@ -72,7 +71,7 @@ const board_handler = (matrix) => {
     let pivot_column = values_matrix[select_column];
 
 
-    // FIND PIVOT
+    // FIND PIVOT INDEX AND VALUE
     let min_ratio = 10000000;
     let pivot_value;
     let pivot_index;
@@ -89,14 +88,30 @@ const board_handler = (matrix) => {
         }
     }
 
-    // Replace the contribution 
+    // REPLACE CONTRIBUTION 
     for (let i = 0; i < cb.length; i++) {
         if (i === pivot_index) {
             cb[i] = function_coeficients[select_column];
         }
     }
 
-    // Operate to get the 1 into the pivot row 
+    // REPLACE VARIABLE
+    const type = matrix.type;
+    const aux_type = matrix.aux_type;
+    let new_variable;
+    for(let i = 0; i < type.length; i++) {
+        if(i === select_column) {
+            new_variable = type[i];
+        }
+    }
+
+    for(let i = 0; i < aux_type.length; i++) {
+        if(i === pivot_index) {
+            aux_type[i] = new_variable;
+        }
+    }
+
+    // OPERATE TO GET THE 1 INTO THE PIVOT ROW
     const operate_to_zeros = [];
     for (let i = 0; i < restrictions_number - 1; i++) {
         operate_to_zeros.push({});
@@ -126,7 +141,7 @@ const board_handler = (matrix) => {
         }
     }
 
-    // Operate to get the zeros into the rest of the rows
+    // OPERATE TO GET THE ZEROS INTO THE REST OF THE ROWS
     for (let i = 0; i < operate_to_zeros.length; i++) {
         for (let j = 0; j < values_matrix.length; j++) {
             for (let k = 0; k < restrictions_number; k++) {
@@ -145,20 +160,25 @@ const board_handler = (matrix) => {
         }
     }
 
+    // RESULT OF THE MATRIX
     let result = 0;
     for (let i = 0; i < restrictions_number; i++) {
         result += cb[i] * conditions[i];
     }
 
-    let matrix_2 = {
+    // NEW MATRIX
+    let matrix_n = {
         aux_contribution: cb,
         values_matrix,
         xj: conditions,
         result,
-        function_coeficients
+        function_coeficients,
+        type,
+        aux_type
     }
 
-    board_handler(matrix_2);
+    // RECURSIVE RECALL
+    board_handler(matrix_n);
     return;
 }
 

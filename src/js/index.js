@@ -3,7 +3,7 @@ import { first_form_handler } from './form_handler.js';
 import { edit_first_form, clean_data } from './forms_display.js';
 import { standarization } from './standarization.js';
 import { matrix } from './boards.js';
-import { board_handler } from './board_operations.js';
+import { edit_operations } from './result_box.js';
 
 
 const app_init = () => {
@@ -12,6 +12,7 @@ const app_init = () => {
     const solve_btn = dom_element().solve_btn;
     const edit_btn = dom_element().edit_btn;
     const clean_btn = dom_element().clean_btn;
+    const edit_operations_btn = dom_element().edit_result_btn;
 
     first_form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -29,6 +30,10 @@ const app_init = () => {
 
     clean_btn.addEventListener('click', () => {
         clean_data();
+    })
+
+    edit_operations_btn.addEventListener('click', () => {
+        edit_operations(second_form);
     })
 
 }

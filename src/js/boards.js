@@ -4,16 +4,20 @@ import { dom_element } from "./dom.js";
 import { board_handler } from "./board_operations.js";
 
 const matrix = () => {
-    const aux_variables = standarization().hol;
-    const aux_contribution = aux_variables_contribution(aux_variables).contribution;
+    const aux_variables = standarization().hol; 
     const base_contribution = standarization().hol.map(base => base.base_contribution);
-    const aux_type = aux_variables_type(aux_variables).type;
     const var_coeficients = variables_coeficient().variable_matrix;
     const aux_res_contribution = aux_restriction_contribution(aux_variables).stand_variables_matrix;
+    const restrictions_number = dom_element().restrictions_number.value;
+
+    const aux_contribution = aux_variables_contribution(aux_variables).contribution;
+    const type = aux_variables_type(aux_variables).type
+    const aux_type = aux_variables_type(aux_variables).aux_type;
     const values_matrix = var_coeficients.concat(aux_res_contribution);
     const xj = simplex_handler().restriction_conditions;
-    const restrictions_number = dom_element().restrictions_number.value;
     const function_coeficients = simplex_handler().variables_coeficients.concat(base_contribution);
+
+
 
     let result = 0;
     for (let i = 0; i < restrictions_number; i++) {
@@ -26,7 +30,9 @@ const matrix = () => {
         values_matrix,
         xj,
         result,
-        function_coeficients
+        function_coeficients,
+        type,
+        aux_type
     }
 
 
@@ -45,29 +51,34 @@ const aux_variables_contribution = (aux_variables) => {
         }
     }
 
-    // const contribution = contribution_a.filter(coeficient => coeficient === 0);
-
-    // console.log(contribution);
-
     return { contribution }
 }
 
 
 const aux_variables_type = (aux_variables) => {
+    const var_type = [];
+    const aux_type = [];
+    const variables_number = dom_element().variables_number.value;
 
-    const type = [];
+    for(let i = 0; i < variables_number; i++) {
+        var_type.push(`X${i + 1}`);
+    }
 
     for(let i = 0; i < aux_variables.length; i++) {
         if(aux_variables[i].res_value != null) {
             if(aux_variables[i].type == 'hol') {
-                type.push(`S${i}`);
+                aux_type.push(`S${i + 1}`);
             } else {
-                type.push(`A${i}`);
+                aux_type.push(`A${i + 1}`);
             }
         }
     }
 
-    return { type }
+    const type = var_type.concat(aux_type);
+
+    console.log(type, aux_type);
+
+    return { type, aux_type }
 }
 
 const variables_coeficient = () => {
